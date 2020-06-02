@@ -6,6 +6,10 @@
 # GNU General Public License v3.0+ (see COPYING or https://www.gnu.org/licenses/gpl-3.0.txt)
 
 from __future__ import absolute_import, division, print_function
+from ansible_collections.sensu.sensu_go.plugins.module_utils import (
+    arguments, errors, utils
+)
+from ansible.module_utils.basic import AnsibleModule
 
 __metaclass__ = type
 
@@ -204,11 +208,6 @@ object:
     type: dict
 '''
 
-from ansible.module_utils.basic import AnsibleModule
-from ansible_collections.sensu.sensu_go.plugins.module_utils import (
-    arguments, errors, utils
-)
-
 
 def validate_module_params(module):
     params = module.params
@@ -238,6 +237,7 @@ def build_api_payload(params):
         'publish',
         'round_robin',
         'runtime_assets',
+        'secrets',
         'stdin',
         'subscriptions',
         'timeout',
@@ -282,6 +282,9 @@ def main():
             ),
             timeout=dict(
                 type='int'
+            ),
+            secrets=dict(
+                type='list'
             ),
             ttl=dict(
                 type='int'
